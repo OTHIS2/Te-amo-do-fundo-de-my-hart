@@ -1,1 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eu Te Amo</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #000000, #2c003e, #420014);
+      background-size: 400% 400%;
+      animation: aurora 20s ease infinite;
+      color: #c70039;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      text-align: center;
+      position: relative;
+    }
 
+    @keyframes aurora {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1, p {
+      margin: 20px;
+      max-width: 700px;
+      
+    }
+
+    #botao {
+      margin-top: 40px;
+      padding: 12px 24px;
+      background-color: #c70039;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+    }
+
+    #botao:hover {
+      background-color: #a8002f;
+    }
+
+    .heart {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      transform: rotate(45deg);
+      animation: fall 10s linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -5px;
+      left: 0;
+    }
+
+    .heart::after {
+      top: 0;
+      left: -5px;
+    }
+
+    @keyframes fall {
+      0% { top: -10%; opacity: 1; }
+      100% { top: 110%; opacity: 0; }
+    }
+
+    #explosao {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 100px;
+      color: #c70039;
+      opacity: 0;
+      transition: all 0.4s ease-out;
+    }
+
+    .explodir {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Oii meu amor</h1>
+  <p>
+    Fiz este site especialmente para dizer que estes têm sido alguns dos melhores momentos da minha vida.<br>
+    Poder dividir contigo as minhas alegrias, os meus delírios e até as minhas inseguranças me faz sentir profundamente amado e aceito.<br>
+    Obrigado por seres exatamente quem és — doce, divertida, acolhedora e incrivelmente única.<br><br>
+    Quero que isso dure para sempre. Eu sei que teremos altos e baixos, e que a vida não é um mar de rosas...<br>
+    mas se for contigo, até os dias difíceis se tornam suportáveis. Porque estar contigo é estar em casa.<br><br>
+    Eu te amo, sua doida, do fundo de my heart. ❤️
+  </p>
+
+  <button id="botao">Se gostou clique aqui</button>
+
+  <div id="explosao">❤️</div>
+
+  <audio autoplay loop>
+    <source src="https://github.com/othis-ai/public-assets/raw/main/music/yung-kai-blue.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio HTML.
+  </audio>
+
+  <script>
+    const botao = document.getElementById('botao');
+    const explosao = document.getElementById('explosao');
+
+    botao.addEventListener('click', () => {
+      explosao.classList.add('explodir');
+      for (let i = 0; i < 200; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        const isRed = Math.random() < 0.5;
+        heart.style.background = isRed ? '#c70039' : '#ffffff';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+        heart.style.zIndex = '0';
+
+        // Before & After (set colors)
+        heart.style.setProperty('--heart-color', isRed ? '#c70039' : '#ffffff');
+        const before = document.createElement('style');
+        before.innerHTML = `
+          .heart::before, .heart::after {
+            background: var(--heart-color);
+          }
+        `;
+        document.head.appendChild(before);
+
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 11000);
+      }
+    });
+  </script>
+</body>
+</html>
